@@ -1,4 +1,4 @@
-# flutter_redux_overview
+# flutter_riverpod_overview
 
 This is just one of the possible examples of state management in Flutter using Riverpod.
 
