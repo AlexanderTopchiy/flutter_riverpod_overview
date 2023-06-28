@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod_overview/feature/home/home_screen.dart';
-import 'package:flutter_riverpod_overview/feature/post/post_screen.dart';
-import 'package:flutter_riverpod_overview/feature/user/user_screen.dart';
+import 'package:flutter_riverpod_overview/feature/post/view/post_screen.dart';
+import 'package:flutter_riverpod_overview/feature/user/view/user_screen.dart';
 import 'package:go_router/go_router.dart';
 
 abstract class _ScreenNames {
