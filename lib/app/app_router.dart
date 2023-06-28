@@ -16,24 +16,34 @@ abstract class RoutesNames {
   static const postList = '$home/${_ScreenNames.postList}';
 }
 
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _shellNavigatorKey = GlobalKey<NavigatorState>();
+final _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+final _shellNavigatorUserKey = GlobalKey<NavigatorState>(debugLabel: 'userShell');
+final _shellNavigatorPostKey = GlobalKey<NavigatorState>(debugLabel: 'postShell');
 
 final appRouter = GoRouter(
   initialLocation: RoutesNames.userList,
   navigatorKey: _rootNavigatorKey,
   routes: [
-    ShellRoute(
-      navigatorKey: _shellNavigatorKey,
-      pageBuilder: (_, __, child) => NoTransitionPage(child: HomeScreen(child: child)),
-      routes: [
-        GoRoute(
-          path: RoutesNames.userList,
-          pageBuilder: (_, __) => const NoTransitionPage(child: UserScreen()),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) => HomeScreen(navigationShell: navigationShell),
+      branches: [
+        StatefulShellBranch(
+          navigatorKey: _shellNavigatorUserKey,
+          routes: [
+            GoRoute(
+              path: RoutesNames.userList,
+              pageBuilder: (_, __) => const NoTransitionPage(child: UserScreen()),
+            ),
+          ],
         ),
-        GoRoute(
-          path: RoutesNames.postList,
-          pageBuilder: (_, __) => const NoTransitionPage(child: PostScreen()),
+        StatefulShellBranch(
+          navigatorKey: _shellNavigatorPostKey,
+          routes: [
+            GoRoute(
+              path: RoutesNames.postList,
+              pageBuilder: (_, __) => const NoTransitionPage(child: PostScreen()),
+            ),
+          ],
         ),
       ],
     ),
