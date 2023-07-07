@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod_overview/data/app_constants.dart';
+import 'package:flutter_riverpod_overview/data/api_constants.dart';
 import 'package:flutter_riverpod_overview/data/model/post.dart';
 import 'package:flutter_riverpod_overview/data/model/user.dart';
 import 'package:flutter_riverpod_overview/data/network_exception.dart';
