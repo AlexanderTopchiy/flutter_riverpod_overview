@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_overview/core/di.dart';
 import 'package:flutter_riverpod_overview/data/model/user.dart';
+import 'package:flutter_riverpod_overview/data/network_exception.dart';
 import 'package:flutter_riverpod_overview/feature/user/riverpod/user_provider.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -19,6 +20,7 @@ void main() {
         name: 'second',
       ),
     ];
+    const exception = NetworkException();
 
     late final MockDataRepository repository;
 
@@ -59,6 +61,21 @@ void main() {
       ]);
       verifyNoMoreInteractions(listener);
       verify(repository.fetchUserList).called(1);
+    });
+
+    test('error state is AsyncError with exception', () async {
+      // GIVEN
+      when(repository.fetchUserList).thenThrow(exception);
+      final container = makeProviderContainer(repository);
+
+      try {
+        // WHEN
+        await container.read(fetchUserListProvider.future);
+      } catch (error) {
+        // THEN
+        verify(repository.fetchUserList).called(1);
+        expect(error, exception);
+      }
     });
   });
 }
